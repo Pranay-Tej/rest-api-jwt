@@ -1,8 +1,10 @@
 import express, { Application, Request, Response, NextFunction } from "express";
-import authRouter from "./routes/auth.router";
-import mongoose from "./utils/db";
+import mongoose from "./utils/db.util";
 import dotenv from "dotenv";
 import morgan from "morgan";
+
+import authRouter from "./routes/auth.router";
+import protect from "./utils/auth.util";
 
 // App, Env
 dotenv.config();
@@ -14,8 +16,15 @@ app.use(morgan("dev"));
 // Routes
 app.use("/api/user", authRouter);
 
+app.use("/safe", protect);
+
 app.get("/", function (req: Request, res: Response) {
-    res.send("Hello TypeScript!");
+    res.send({ message: "Hello TypeScript!" });
+});
+
+app.get("/safe", function (req: Request, res: Response) {
+    console.log(req.body.user);
+    res.send({ message: "Hello TypeScript!", user: req.body.user });
 });
 
 // MongoDB Connection

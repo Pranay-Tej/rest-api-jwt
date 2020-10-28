@@ -1,5 +1,6 @@
 import joi from "joi";
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 import express, { Router } from "express";
 import User from "../models/User";
 import UserSchemaValidation from "../models/User.validation";
@@ -47,7 +48,12 @@ authRouter.post("/login", async (req, res) => {
         if (!passwordCheck) {
             throw "Incorrect password";
         }
-        res.send({ data: "Success" });
+
+        const token = jwt.sign(
+            { _id: user.toJSON()._id },
+            process.env.TOKEN_SECRET as string
+        );
+        res.header("auth-token", token).send({ data: "Success" });
     } catch (error) {
         res.status(400).send({ message: error });
     }
