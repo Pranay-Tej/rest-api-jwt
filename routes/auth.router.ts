@@ -51,9 +51,10 @@ authRouter.post("/login", async (req, res) => {
 
         const token = jwt.sign(
             { _id: user.toJSON()._id },
-            process.env.TOKEN_SECRET as string
+            process.env.TOKEN_SECRET as string,
+            { expiresIn: 600 }
         );
-        res.header("auth-token", token).send({ data: "Success" });
+        res.send({ token });
     } catch (error) {
         res.status(400).send({ message: error });
     }
