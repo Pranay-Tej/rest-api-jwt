@@ -2,7 +2,7 @@ import express, { Application, Request, Response, NextFunction } from "express";
 import mongoose from "./utils/db.util";
 import dotenv from "dotenv";
 import morgan from "morgan";
-
+import cors from 'cors';
 import authRouter from "./routes/auth.router";
 import protect from "./utils/auth.util";
 
@@ -10,6 +10,7 @@ import protect from "./utils/auth.util";
 dotenv.config();
 const app: Application = express();
 
+app.use(cors())
 // Middleware
 app.use(express.json());
 app.use(morgan("dev"));
