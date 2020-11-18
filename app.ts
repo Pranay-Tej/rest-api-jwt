@@ -24,8 +24,13 @@ app.get("/", function (req: Request, res: Response) {
 });
 
 app.get("/safe", function (req: Request, res: Response) {
-    console.log(req.body.user);
+    console.log(req.body);
     res.send({ message: "Hello TypeScript!", user: req.body.user });
+});
+
+app.get("/safe/verify", function (req: Request, res: Response) {
+    console.log(req.body);
+    res.send({ message: "Valid User!", user: req.body.user });
 });
 
 // MongoDB Connection
