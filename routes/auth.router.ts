@@ -56,7 +56,7 @@ authRouter.post("/login", async (req, res) => {
         );
         res.send({ token });
     } catch (error) {
-        res.status(400).send({ message: error });
+        res.status(401).send({ message: error });
     }
 });
 
